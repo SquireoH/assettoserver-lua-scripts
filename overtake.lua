@@ -233,8 +233,8 @@ local speedWarning = 0
                 ui.drawLine(ref + vec2(0, 0), ref + vec2(speed, 0), colorAccent, 4)
             end
         end
-
-        ui.beginTransparentWindow("overtakeScore", vec2(100, 100), vec2(400 * 0.5, 400 * 0.5))
+-- Changed Window position so that it is closer to the middle when using Triple screens.
+        ui.beginTransparentWindow("overtakeScore", vec2(1700, 100), vec2(1900, 400 * 0.5))
         ui.beginOutline()
 
         ui.pushStyleVar(ui.StyleVar.Alpha, 1 - speedWarning)
