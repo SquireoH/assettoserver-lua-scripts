@@ -234,30 +234,27 @@ local speedWarning = 0
             end
         end
 -- Changed Window position so that it is closer to the middle when using Triple screens.
-        ui.beginTransparentWindow("overtakeScore", vec2(1700, 100), vec2(1900, 400 * 0.5))
+        ui.beginTransparentWindow("overtakeScore", vec2(1700, 100), vec2(1900, 200))
         ui.beginOutline()
 
         ui.pushStyleVar(ui.StyleVar.Alpha, 1 - speedWarning)
-        --ui.pushFont(ui.Font.Main)
-        --ui.text("Highest Score: " .. highestScore .. " pts")
         ui.popFont()
         ui.popStyleVar()
-
         ui.pushFont(ui.Font.Title)
+        ui.offsetCursorY(20)
         ui.text(totalScore .. " pts")
-    -- Pushed Highscore to bottom
-        ui.pushFont(ui.Font.Main)
-        ui.text("Highest Score: " .. highestScore .. " pts")
         ui.sameLine(0, 20)
         ui.beginRotation()
         ui.textColored(math.ceil(comboMeter * 10) / 10 .. "x", colorCombo)
         if comboMeter > 20 then
             ui.endRotation(math.sin(comboMeter / 180 * 3141.5) * 3 * math.lerpInvSat(comboMeter, 20, 30) + 90)
         end
+    
+        ui.pushFont(ui.Font.Main)
+        ui.text("Highest Score: " .. highestScore .. " pts")
         ui.popFont()
         ui.endOutline(rgbm(0, 0, 0, 0.3))
-
-        ui.offsetCursorY(20)
+        
         ui.pushFont(ui.Font.Main)
         local startPos = ui.getCursor()
         for i = 1, #messages do
@@ -277,13 +274,11 @@ local speedWarning = 0
         end
         ui.popFont()
         ui.setCursor(startPos + vec2(0, 4 * 30))
-
         ui.pushStyleVar(ui.StyleVar.Alpha, speedWarning)
         ui.setCursorY(0)
         ui.pushFont(ui.Font.Main)
         ui.textColored("Keep speed above " .. requiredSpeed .. " km/h:", colorAccent)
         speedMeter(ui.getCursor() + vec2(-9 * 0.5, 4 * 0.2))
-
         ui.popFont()
         ui.popStyleVar()
 
