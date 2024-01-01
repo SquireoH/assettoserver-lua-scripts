@@ -238,13 +238,16 @@ local speedWarning = 0
         ui.beginOutline()
 
         ui.pushStyleVar(ui.StyleVar.Alpha, 1 - speedWarning)
-        ui.pushFont(ui.Font.Main)
-        ui.text("Highest Score: " .. highestScore .. " pts")
+        --ui.pushFont(ui.Font.Main)
+        --ui.text("Highest Score: " .. highestScore .. " pts")
         ui.popFont()
         ui.popStyleVar()
 
         ui.pushFont(ui.Font.Title)
         ui.text(totalScore .. " pts")
+    -- Pushed Highscore to bottom
+        ui.pushFont(ui.Font.Main)
+        ui.text("Highest Score: " .. highestScore .. " pts")
         ui.sameLine(0, 20)
         ui.beginRotation()
         ui.textColored(math.ceil(comboMeter * 10) / 10 .. "x", colorCombo)
