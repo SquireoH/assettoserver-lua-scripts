@@ -31,7 +31,7 @@ local totalScore = 0
 local comboMeter = 1
 local comboColor = 0
 local highestScore = 0
-local lastscore = 0
+local lastScore = 0
 local dangerouslySlowTimer = 0
 local carsState = {}
 local wheelsWarningTimeout = 0
@@ -47,7 +47,7 @@ function script.update(dt)
             highestScore = math.floor(totalScore)
             ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
         end
-        lastscore = math.floor(totalScore)
+        lastScore = math.floor(totalScore)
         totalScore = 0
         comboMeter = 1
         return
@@ -78,7 +78,7 @@ function script.update(dt)
                 highestScore = math.floor(totalScore)
                 ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
             end
-            lastscore = math.floor(totalScore)
+            lastScore = math.floor(totalScore)
             totalScore = 0
             comboMeter = 1
         else
@@ -123,7 +123,7 @@ function script.update(dt)
                     highestScore = math.floor(totalScore)
                     ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
                 end
-                lastscore = math.floor(totalScore)
+                lastScore = math.floor(totalScore)
                 totalScore = 0
                 comboMeter = 1
             end
@@ -237,7 +237,7 @@ local speedWarning = 0
                 ui.drawLine(ref + vec2(0, 0), ref + vec2(speed, 0), colorAccent, 4)
             end
         end
--- Changed Window position so that it is closer to the middle when using Triple screens.(Need to figure a way to grab current resolution for better universal placement)
+-- Changed Window position so that it is closer to the middle when using Triple screens. Need to figure a way to grab current resolution for better universal placement
         ui.beginTransparentWindow("overtakeScore", vec2(1700, 100), vec2(1900, 400))
         ui.beginOutline()
 
@@ -256,7 +256,7 @@ local speedWarning = 0
     
         ui.pushFont(ui.Font.Main)
         ui.text("Highest Score: " .. highestScore .. " pts")
-        ui.text("Last Score: " .. lastscore .. " pts")
+        ui.text("Last Score: " .. lastScore .. " pts")
         ui.popFont()
         ui.endOutline(rgbm(0, 0, 0, 0.3))
         
