@@ -36,12 +36,6 @@ local dangerouslySlowTimer = 0
 local carsState = {}
 local wheelsWarningTimeout = 0
 
-local stored = { }
-
-stored.thing = ac.storage('thing', highestScore) --default value
-highestScore = stored.thing:get()
-
-
 function script.update(dt)
     if timePassed == 0 then
         addMessage("Let’s go!", 0)
@@ -50,11 +44,12 @@ function script.update(dt)
     local player = ac.getCarState(1)
     if player.engineLifeLeft < 1 then
         if totalScore > highestScore then
-            highestScore = math.floor(totalScore)
-            stored.thing:set(highestScore)
+            highestScore = math.floor(totalScore)            
             ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
         end
-        lastScore = math.floor(totalScore)
+        if totalScore > 0 then
+            lastScore = totalScore
+        end
         totalScore = 0
         comboMeter = 1
         return
@@ -82,11 +77,13 @@ function script.update(dt)
     if player.speedKmh < requiredSpeed then
         if dangerouslySlowTimer > 3 then
             if totalScore > highestScore then
-                highestScore = math.floor(totalScore)
-                stored.thing:set(highestScore)
+                highestScore = math.floor(totalScore)                
                 ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
             end
-            lastScore = math.floor(totalScore)
+            if totalScore > 0 then
+                lastScore = totalScore
+            end
+
             totalScore = 0
             comboMeter = 1
         else
@@ -128,11 +125,13 @@ function script.update(dt)
                 state.collided = true
 
                 if totalScore > highestScore then
-                    highestScore = math.floor(totalScore)
-                    stored.thing:set(highestScore)
+                    highestScore = math.floor(totalScore)                    
                     ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
                 end
-                lastScore = math.floor(totalScore)
+                if totalScore > 0 then
+                    lastScore = totalScore
+                end
+
                 totalScore = 0
                 comboMeter = 1
             end
@@ -142,7 +141,7 @@ function script.update(dt)
                 local posDot = math.dot(posDir, car.look)
                 state.maxPosDot = math.max(state.maxPosDot, posDot)
                 if posDot < -0.5 and state.maxPosDot > 0.5 then
-                    totalScore = totalScore + math.ceil(10 * comboMeter)
+                    totalScore = totalScore + math.ceil(10 * comboMeter)                    
                     comboMeter = comboMeter + 1
                     comboColor = comboColor + 90
                     addMessage("Overtake", comboMeter > 20 and 1 or 0)
