@@ -128,7 +128,7 @@ function script.update(dt)
                     highestScore = math.floor(totalScore)                    
                     ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
                 end
-                if totalScore > 0 then
+                if totalScore > 0 and not state.overtaken then
                     lastScore = totalScore
                 end
 
