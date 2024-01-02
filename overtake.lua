@@ -36,6 +36,12 @@ local dangerouslySlowTimer = 0
 local carsState = {}
 local wheelsWarningTimeout = 0
 
+local stored = { }
+
+stored.thing = ac.storage('thing', highestScore) --default value
+highestScore = stored.thing:get()
+
+
 function script.update(dt)
     if timePassed == 0 then
         addMessage("Let’s go!", 0)
@@ -45,6 +51,7 @@ function script.update(dt)
     if player.engineLifeLeft < 1 then
         if totalScore > highestScore then
             highestScore = math.floor(totalScore)
+            stored.thing:set(highestScore)
             ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
         end
         lastScore = math.floor(totalScore)
@@ -76,6 +83,7 @@ function script.update(dt)
         if dangerouslySlowTimer > 3 then
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)
+                stored.thing:set(highestScore)
                 ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
             end
             lastScore = math.floor(totalScore)
@@ -121,6 +129,7 @@ function script.update(dt)
 
                 if totalScore > highestScore then
                     highestScore = math.floor(totalScore)
+                    stored.thing:set(highestScore)
                     ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
                 end
                 lastScore = math.floor(totalScore)
